@@ -1,11 +1,30 @@
 const express = require('express')
+require('dotenv').config()
 const app = express()
-const port = 3000
+const workoutRoutes=require('./routes/workouts')
+const mongoose = require('mongoose')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+
+app.use(express.json())
+app.use((req, res, next) => {
+    console.log(req.path,req.method)
+    next()
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.get('/', (req,res)=>{
+  res.send('hello world')
 })
+
+app.use('/api/workouts' ,workoutRoutes)
+
+
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
+  app.listen(process.env.PORT, () => {
+    console.log(`Example app listening on port ` , process.env.PORT)
+  })
+})
+.catch((error)=>{
+  console.log(error)
+})
+
