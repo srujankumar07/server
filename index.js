@@ -11,9 +11,10 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/', (req,res)=>{
-  res.send('hello world')
-})
+app.get('/', (req, res) => {
+  res.json({ message: 'hello world' });
+});
+
 
 app.use('/api/workouts' ,workoutRoutes)
 
